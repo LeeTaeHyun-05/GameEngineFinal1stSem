@@ -194,4 +194,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   expOrb10: {fileID: 65511421884006128, guid: d727e48c608116247821d08c500008e3, type: 3}
   expOrb30: {fileID: 5818170064778359012, guid: 97a21eba299e2584caac76a98ebbafde, type: 3}
+  scoreValue: 50
   statData: {fileID: 11400000, guid: f1f31aa528dda514d894fc556a4550fc, type: 2}

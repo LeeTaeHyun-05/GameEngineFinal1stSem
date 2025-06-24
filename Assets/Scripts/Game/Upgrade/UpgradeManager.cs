@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
 
 [System.Serializable]
 public class UpgradeData
@@ -11,16 +12,19 @@ public class UpgradeData
     public int hpLevel = 0;
 
 
-    public int GetUpgradeCost(int level) => 100 + level * 80;
+    public int GetUpgradeCost(int level) => 150 + (level * 100);
 }
 
 public class UpgradeManager : MonoBehaviour
 {
+    public static UpgradeManager Instance { get; private set; }
+
     public PlayerStatSO playerStat;
     public GoldData goldData;
     public UpgradeData upgradeData = new UpgradeData();
-    public static UpgradeManager Instance { get; private set; }
-    private const int maxLevel = 5;
+
+    public int maxLevel = 5;
+  
 
     private void Awake()
     {
@@ -34,63 +38,87 @@ public class UpgradeManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         LoadUpgrades();
     }
-    private void Start()
+
+    public int GetUpgradeCost(int level)
     {
-        ApplyUpgrades();
+        return 150 + (level * 100); // 0→1 : 150, 1→2 : 250, ...
     }
-
-
-
 
     public void UpgradeAttack()
     {
-        TryUpgrade(ref upgradeData.atkLevel, () => playerStat.attack++);
+        int level = upgradeData.atkLevel;
+        if (level >= maxLevel) return;
+
+        int cost = GetUpgradeCost(level);
+        if (goldData.currentGold < cost) return;
+
+        goldData.currentGold -= cost;
+        playerStat.baseAttack += 1;
+        upgradeData.atkLevel++;
+        SaveUpgrades();
+      
+
     }
 
     public void UpgradeDefense()
     {
-        TryUpgrade(ref upgradeData.defLevel, () => playerStat.defense++);
+        int level = upgradeData.defLevel;
+        if (level >= maxLevel) return;
+
+        int cost = GetUpgradeCost(level);
+        if (goldData.currentGold < cost) return;
+
+        goldData.currentGold -= cost;
+        playerStat.baseDefense += 1;
+        upgradeData.defLevel++;
+        SaveUpgrades();
     }
 
     public void UpgradeHP()
     {
-        TryUpgrade(ref upgradeData.hpLevel, () => playerStat.maxHealth += 3);
-    }
-
-    private void TryUpgrade(ref int level, System.Action onUpgrade)
-    {
+        int level = upgradeData.hpLevel;
         if (level >= maxLevel) return;
 
-        int cost = upgradeData.GetUpgradeCost(level);
-        if (goldData.currentGold >= cost)
-        {
-            goldData.currentGold -= cost;
-            level++;
-            onUpgrade?.Invoke();
-            SaveUpgrades();
-        }
+        int cost = GetUpgradeCost(level);
+        if (goldData.currentGold < cost) return;
+
+        goldData.currentGold -= cost;
+        playerStat.baseHP += 10;
+        upgradeData.hpLevel++;
+        SaveUpgrades();
     }
 
-    private void ApplyUpgrades()
-    {
-        playerStat.attack += upgradeData.atkLevel;
-        playerStat.defense += upgradeData.defLevel;
-        playerStat.maxHealth += upgradeData.hpLevel * 3;
-    }
-
-    private void SaveUpgrades()
+    public void SaveUpgrades()
     {
         string json = JsonUtility.ToJson(upgradeData);
-        System.IO.File.WriteAllText(Application.persistentDataPath + "/upgrade.json", json);
+        File.WriteAllText(Application.persistentDataPath + "/upgrades.json", json);
     }
 
-    private void LoadUpgrades()
+    public void LoadUpgrades()
     {
-        string path = Application.persistentDataPath + "/upgrade.json";
-        if (System.IO.File.Exists(path))
+        string path = Application.persistentDataPath + "/upgrades.json";
+        if (File.Exists(path))
         {
-            string json = System.IO.File.ReadAllText(path);
+            string json = File.ReadAllText(path);
             upgradeData = JsonUtility.FromJson<UpgradeData>(json);
         }
     }
+    public string GetUpgradeSummary(string statType)
+    {
+        int level = 0;
+        switch (statType)
+        {
+            case "ATK": level = upgradeData.atkLevel; break;
+            case "DEF": level = upgradeData.defLevel; break;
+            case "HP": level = upgradeData.hpLevel; break;
+        }
+
+        if (level >= maxLevel)
+            return "MAX 강화 완료";
+
+        int cost = GetUpgradeCost(level);
+        return $"Lv.{level} → Lv.{level + 1}   |   비용: {cost:N0}G";
+    }
+
+
 }

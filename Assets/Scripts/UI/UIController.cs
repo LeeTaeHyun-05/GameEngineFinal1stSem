@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
+    public static UIController Instance { get; private set; }
+
     [Header("UI Elements")]
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI goldText;
@@ -20,6 +22,16 @@ public class UIController : MonoBehaviour
     public GoldData goldData;
 
     private float timer = 0f;
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+
 
     private void Update()
     {

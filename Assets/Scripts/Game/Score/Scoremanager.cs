@@ -48,7 +48,7 @@ public class Scoremanager : MonoBehaviour
                       .ThenByDescending(e => e.survivalTime).ToList();
     }
 
-    private void LoadScores()
+    public void LoadScores()
     {
         if (File.Exists(filePath))
         {

@@ -28,13 +28,19 @@ public class PlayerStatData : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        int finalDamage = Mathf.Max(damage - Defense, 1);
-        CurrentHealth -= finalDamage;
+        if (statData == null)
+        {
+            Debug.LogError(" PlayerStatData의 statData가 null입니다!");
+            return;
+        }
+
+        CurrentHealth -= Mathf.Max(damage - statData.defense, 1);
 
         if (CurrentHealth <= 0)
         {
             Die();
         }
+
     }
 
     public void Heal(int amount)
