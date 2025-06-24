@@ -47,6 +47,12 @@ public class UIController : MonoBehaviour
         if (timeText != null)
             timeText.text = $"생존 시간: {timer:F1}초";
     }
+
+    public void OnScoreChanged(int score)
+    {
+        scoreText.text = $"점수: {score}";
+    }
+
 }
 
 

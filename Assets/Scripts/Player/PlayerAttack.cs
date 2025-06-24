@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerStatSO))]
+[RequireComponent(typeof(PlayerStatData))]
 public class PlayerAttack : MonoBehaviour
 {
     public Transform attackOrigin; // 공격 시작 위치
@@ -20,10 +20,11 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (!isAttacking && Input.GetMouseButton(0))
         {
             StartCoroutine(AttackRoutine());
         }
+
     }
 
     private IEnumerator AttackRoutine()
@@ -63,6 +64,8 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
         }
+        Debug.Log("공격 실행됨");
+
     }
 
     private void OnDrawGizmosSelected()

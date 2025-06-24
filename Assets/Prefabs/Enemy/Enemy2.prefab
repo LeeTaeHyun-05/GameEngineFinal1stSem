@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7923652074126286927}
   - component: {fileID: 4188516554961586497}
   - component: {fileID: 3224746969439682631}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Enemy2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc16f8c2a037e643acee51869cae1ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackRange: 1.2
+  attackRange: 0.1
   attackCooldown: 1.5
   playerLayer:
     serializedVersion: 2

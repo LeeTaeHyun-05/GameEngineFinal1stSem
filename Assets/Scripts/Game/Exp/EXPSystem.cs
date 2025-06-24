@@ -21,7 +21,7 @@ public class EXPSystem : MonoBehaviour
     private void LevelUP()
     {
         currentLevel++;
-        expToNextLevel += 20;
+        expToNextLevel = GetCurrentLevelRequirement();
         Debug.Log($"레벨 업! 현재 레벨: {currentLevel}");
     }
     public int GetCurrentLevelRequirement()

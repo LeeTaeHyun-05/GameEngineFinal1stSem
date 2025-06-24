@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyAttack : MonoBehaviour
 {
     public float attackRange = 1.2f;
-    public float attackCooldown = 1.5f;
+    public float attackCooldown = 0.7f;
     public LayerMask playerLayer;
 
     private float currentCooldown = 0f;
