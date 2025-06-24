@@ -45,25 +45,26 @@ public class GameManager : MonoBehaviour
 
     public void PlayerDied()
     {
+       
         Time.timeScale = 0f;
+
+        string playerName = PlayerPrefs.GetString("PlayerName", "플레이어");
+
+
         ScoreEntry entry = new ScoreEntry
         {
-            playerName = PlayerNameInput.PlayerName,
+            playerName = playerName,
             wave = CurrentWave,
             score = Score,
             survivalTime = Time.timeSinceLevelLoad
         };
+        Debug.Log($"[점수 저장] 이름: {entry.playerName} | 점수: {entry.score}");
         Scoremanager.Instance.SaveScore(entry);
 
-
         if (gameOverUI != null)
-        {
             gameOverUI.SetActive(true);
-        }
         else
-        {
             Debug.LogError("GameOverUI가 GameManager에 연결되지 않았습니다!");
-        }
 
     }
 

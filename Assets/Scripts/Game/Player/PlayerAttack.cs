@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerStatData))]
+
 public class PlayerAttack : MonoBehaviour
 {
     public Transform attackOrigin; // 공격 시작 위치
-    public float attackRange = 2f; // 공격 범위
-    public float attackAngle = 120f; // 공격 각도
+    public float attackRange = 1f; // 공격 범위
+    public float attackAngle = 90f; // 공격 각도
     public LayerMask enemyLayer;
 
     private PlayerStatData stats;
     private bool isAttacking = false;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
+    [SerializeField] private AttackAniController weaponAnimator;
+    private PlayerMovement playerMovement;
 
     private void Awake()
     {
         stats = GetComponent<PlayerStatData>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -23,6 +31,10 @@ public class PlayerAttack : MonoBehaviour
         if (!isAttacking && Input.GetMouseButton(0))
         {
             StartCoroutine(AttackRoutine());
+        }
+        if (Input.GetMouseButtonDown(0)) // 좌클릭
+        {
+            weaponAnimator.PlayAttackAnimation();
         }
 
     }
@@ -60,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
                 EnemyStatData enemy = hit.GetComponent<EnemyStatData>();
                 if (enemy != null)
                 {
-                    enemy.TakeDamage(stats.statData.attack);
+                    enemy.TakeDamage(stats.Attack);
                 }
             }
         }

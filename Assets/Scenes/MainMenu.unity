@@ -1024,6 +1024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed30ebd9b0078df4e9a5e9460aee08a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nameInput: {fileID: 196438196}
   ScrollView: {fileID: 1761829986}
 --- !u!4 &400616023
 Transform:

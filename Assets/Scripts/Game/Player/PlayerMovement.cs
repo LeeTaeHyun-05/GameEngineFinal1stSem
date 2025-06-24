@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(PlayerStatData))]
 public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private PlayerStatData stats;
+
     private Vector2 input;
+    public Vector2 lastDirection = Vector2.down;
+    
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -21,22 +27,40 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-
-        // 애니메이터에 방향과 움직임 상태 전달
-        animator.SetFloat("MoveX", input.x);
-        animator.SetFloat("MoveY", input.y);
-        animator.SetBool("IsMoving", input != Vector2.zero);
-
-        // 왼쪽일 때 sprite 반전
-        if (input.x < 0)
-            spriteRenderer.flipX = true;
-        else if (input.x > 0)
-            spriteRenderer.flipX = false;
+        HandleInput();
+        HandleAnimation();
+        HandleSpriteFlip();
     }
 
     private void FixedUpdate()
     {
-        rb.velocity = input * stats.statData.moveSpeed;
+        rb.velocity = input * stats.MoveSpeed;
+    }
+
+    private void HandleInput()
+    {
+        input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+
+        if (input != Vector2.zero)
+            lastDirection = input;
+    }
+
+    private void HandleAnimation()
+    {
+        bool isMoving = input != Vector2.zero;
+        animator.SetBool("IsMoving", isMoving);
+
+        // 방향 전달 (정지 상태에서도 방향 유지)
+        animator.SetFloat("MoveX", lastDirection.x);
+        animator.SetFloat("MoveY", lastDirection.y);
+
+    }
+
+    private void HandleSpriteFlip()
+    {
+        if (lastDirection.x < -0.5f)
+            spriteRenderer.flipX = true;
+        else if (lastDirection.x > 0.5f)
+            spriteRenderer.flipX = false;
     }
 }

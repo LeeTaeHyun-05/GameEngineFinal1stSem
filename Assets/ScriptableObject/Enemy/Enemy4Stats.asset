@@ -17,4 +17,4 @@ MonoBehaviour:
   defense: 8
   moveSpeed: 0.7
   goldReward: 60
-  expReward: 10
+  expReward: 0
