@@ -10,12 +10,10 @@ public class GameSceneInitializer : MonoBehaviour
     {
         if (GameManager.Instance != null)
         {
+            GameManager.Instance.goldData.currentGold = 0; // 골드 초기화
+            GameManager.Instance.UpdateGoldUI();           // UI 갱신
             GameManager.Instance.gameOverUI = gameOverUI;
-            Debug.Log("GameOverUI 연결됨: " + gameOverUI.name);
-        }
-        else
-        {
-            Debug.LogWarning("GameManager.Instance가 null임!");
+            GameManager.Instance.expSystem = FindObjectOfType<EXPSystem>();
         }
 
 

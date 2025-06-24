@@ -37,20 +37,14 @@ public class EnemyStatData : MonoBehaviour
 
     private void Die()
     {
-        // 1. Á¡¼ö È¹µæ
-        GameManager.Instance.AddScore(scoreValue); // Á¡¼ö Áõ°¡
-        UIController.Instance.OnScoreChanged(GameManager.Instance.Score); // UI ¹Ý¿µ
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.AddScore(scoreValue);
+            GameManager.Instance.AddGold(statData.goldReward);
+            GameManager.Instance.expSystem?.GainExp(statData.expReward);
+        }
 
-        // 2. °ñµå È¹µæ
-        GameManager.Instance.AddGold(statData.goldReward);
-
-        // 3. °æÇèÄ¡ È¹µæ
-        GameManager.Instance.expSystem.GainExp(statData.expReward);
-
-        // 4. °æÇèÄ¡ ¿ÀºêÁ§Æ® µå·Ó
         DropExpOrb();
-
-        // 5. Àû Á¦°Å
         Destroy(gameObject);
     }
 

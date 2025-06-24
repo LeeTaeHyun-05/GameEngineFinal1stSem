@@ -48,14 +48,13 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         ScoreEntry entry = new ScoreEntry
         {
-            playerName = "Taehyun", // 또는 이름 입력창에서 받은 값
+            playerName = PlayerNameInput.PlayerName,
             wave = CurrentWave,
             score = Score,
             survivalTime = Time.timeSinceLevelLoad
         };
         Scoremanager.Instance.SaveScore(entry);
 
-        Time.timeScale = 0f;
 
         if (gameOverUI != null)
         {

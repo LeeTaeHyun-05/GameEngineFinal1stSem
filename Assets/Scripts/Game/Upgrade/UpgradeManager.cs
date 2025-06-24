@@ -55,6 +55,7 @@ public class UpgradeManager : MonoBehaviour
         goldData.currentGold -= cost;
         playerStat.baseAttack += 1;
         upgradeData.atkLevel++;
+        Debug.Log($"[강화] 공격력이 {playerStat.baseAttack}로 증가했습니다.");
         SaveUpgrades();
       
 
@@ -71,6 +72,7 @@ public class UpgradeManager : MonoBehaviour
         goldData.currentGold -= cost;
         playerStat.baseDefense += 1;
         upgradeData.defLevel++;
+        Debug.Log($"[강화] 방어력이 {playerStat.baseDefense}로 증가했습니다.");
         SaveUpgrades();
     }
 
@@ -85,6 +87,7 @@ public class UpgradeManager : MonoBehaviour
         goldData.currentGold -= cost;
         playerStat.baseHP += 10;
         upgradeData.hpLevel++;
+        Debug.Log($"[강화] 체력이 {playerStat.baseHP}로 증가했습니다.");
         SaveUpgrades();
     }
 

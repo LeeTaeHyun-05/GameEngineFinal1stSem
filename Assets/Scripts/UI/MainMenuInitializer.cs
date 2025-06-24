@@ -10,7 +10,15 @@ public class MainMenuInitializer : MonoBehaviour
     void Start()
     {
         GameManager.Instance.goldText = goldText;
-        GameManager.Instance.UpdateGoldUI();
+
+        if (goldText != null)
+        {
+            GameManager.Instance.UpdateGoldUI();
+        }
+        else
+        {
+            Debug.LogWarning("goldText가 MainMenuInitializer에서 null입니다.");
+        }
     }
 
 }

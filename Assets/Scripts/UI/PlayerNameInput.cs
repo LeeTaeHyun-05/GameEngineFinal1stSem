@@ -12,6 +12,7 @@ public class PlayerNameInput : MonoBehaviour
     public void OnConfirmName()
     {
         PlayerName = string.IsNullOrWhiteSpace(inputField.text) ? "플레이어" : inputField.text;
+        Debug.Log($"[이름 확인] 입력한 이름: {PlayerName}");
         SceneManager.LoadScene("GameScene");
     }
 
