@@ -64,6 +64,11 @@ public class UIController : MonoBehaviour
     {
         scoreText.text = $"Á¡¼ö: {score}";
     }
+    public void OnGoldChanged(int newGold)
+    {
+        if (goldText != null)
+            goldText.text = $"GOLD: {newGold}";
+    }
 
 }
 

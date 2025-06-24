@@ -11,14 +11,8 @@ public class MainMenuInitializer : MonoBehaviour
     {
         GameManager.Instance.goldText = goldText;
 
-        if (goldText != null)
-        {
-            GameManager.Instance.UpdateGoldUI();
-        }
-        else
-        {
-            Debug.LogWarning("goldText가 MainMenuInitializer에서 null입니다.");
-        }
+        GameManager.Instance.UpdateGoldUI();
     }
-
 }
+
+

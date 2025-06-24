@@ -110,4 +110,27 @@ public class GameManager : MonoBehaviour
         UpdateGoldUI();                  // 4. UIµµ °»½Å
     }
 
+    public void ResetGame()
+    {
+        Score = 0;
+        CurrentWave = 0;
+        Time.timeScale = 1f;
+
+        if (expSystem != null)
+        {
+            expSystem.currentExp = 0;
+            expSystem.currentLevel = 1;
+            expSystem.expSlider.value = 0;
+        }
+
+        if (UIController.Instance != null)
+        {
+            UIController.Instance.OnScoreChanged(0);
+            UIController.Instance.OnGoldChanged(goldData.currentGold);
+        }
+
+        if (gameOverUI != null)
+            gameOverUI.SetActive(false);
+    }
+
 }

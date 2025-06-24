@@ -37,6 +37,7 @@ public class ButtonController : MonoBehaviour
 
    public void Tomain()
     {
+        GameManager.Instance.ResetGame();
         SceneManager.LoadScene("MainMenu");
     }
 }

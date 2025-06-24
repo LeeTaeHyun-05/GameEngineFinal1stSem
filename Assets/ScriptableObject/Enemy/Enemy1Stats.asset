@@ -15,6 +15,6 @@ MonoBehaviour:
   maxHealth: 5
   attack: 3
   defense: 1
-  moveSpeed: 1
+  moveSpeed: 0.7
   goldReward: 30
   expReward: 0
