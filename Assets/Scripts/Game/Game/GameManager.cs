@@ -18,16 +18,16 @@ public class GameManager : MonoBehaviour
 
     public void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
 
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
         LoadGold();
+
     }
 
     private void Start()

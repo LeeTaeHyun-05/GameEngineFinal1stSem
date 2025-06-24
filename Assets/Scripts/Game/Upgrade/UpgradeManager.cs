@@ -19,14 +19,28 @@ public class UpgradeManager : MonoBehaviour
     public PlayerStatSO playerStat;
     public GoldData goldData;
     public UpgradeData upgradeData = new UpgradeData();
-
+    public static UpgradeManager Instance { get; private set; }
     private const int maxLevel = 5;
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        LoadUpgrades();
+    }
     private void Start()
     {
-        LoadUpgrades();
         ApplyUpgrades();
     }
+
+
+
 
     public void UpgradeAttack()
     {
