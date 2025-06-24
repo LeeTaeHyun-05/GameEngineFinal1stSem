@@ -7,10 +7,19 @@ public class PlayerStatData : MonoBehaviour
 {
     public PlayerStatSO statData;
     public int CurrentHealth { get; private set; }
-    public int Attack => statData.attack;
-    public int Defense => statData.defense;
-    public float AttackSpeed => statData.attackSpeed;
-    public float MoveSpeed => statData.moveSpeed;
+    // 보너스 스탯 (레벨업 시 증가)
+    public int BonusAttack { get; set; }
+    public int BonusDefense { get; set; }
+    public int BonusMaxHealth { get; set; }
+    public float BonusAttackSpeed { get; set; }
+    public float BonusMoveSpeed { get; set; }
+
+    // 계산된 스탯 프로퍼티
+    public int Attack => statData.attack + BonusAttack;
+    public int Defense => statData.defense + BonusDefense;
+    public float AttackSpeed => statData.attackSpeed + BonusAttackSpeed;
+    public float MoveSpeed => statData.moveSpeed + BonusMoveSpeed;
+  
 
     private void Awake()
     {
